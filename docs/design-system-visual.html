@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seamonster UI/UX Design System</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: #1A1A1A;
+    background: #fff;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { font-size: 10pt; }
+    .page-break { page-break-before: always; }
+    .no-print { display: none !important; }
+    section { page-break-inside: avoid; }
+    .cover { min-height: auto; padding: 40px 0; }
+    .container { padding: 0 20px; }
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── Cover ── */
+  .cover {
+    min-height: 340px;
+    background: linear-gradient(135deg, #F15A30 0%, #D94E26 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 60px 0;
+  }
+  .cover h1 { font-size: 42px; font-weight: 800; margin-bottom: 8px; }
+  .cover p { font-size: 18px; opacity: 0.85; }
+  .cover .meta { margin-top: 24px; font-size: 13px; opacity: 0.6; }
+
+  /* ── Section ── */
+  section { padding: 48px 0; border-bottom: 1px solid #EEEEEE; }
+  section:last-child { border-bottom: none; }
+  .section-title {
+    font-size: 24px; font-weight: 800; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #F15A30; color: #fff; font-size: 14px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-desc { color: #666; font-size: 14px; margin-bottom: 28px; }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+  th, td { padding: 10px 14px; text-align: left; border: 1px solid #E8E8E8; vertical-align: top; }
+  th { background: #FAFAFA; font-weight: 600; font-size: 12px; color: #666; white-space: nowrap; }
+  td code { background: #F5F5F5; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-family: "SF Mono", Consolas, monospace; }
+
+  /* ── Color Swatches ── */
+  .swatch-row { display: flex; align-items: center; gap: 10px; }
+  .swatch {
+    width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+  .swatch-info { font-size: 13px; line-height: 1.3; }
+  .swatch-info .name { font-weight: 600; }
+  .swatch-info .hex { color: #999; font-size: 12px; font-family: "SF Mono", Consolas, monospace; }
+
+  /* ── Color Grid ── */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
+
+  /* ── Typography Samples ── */
+  .typo-sample { margin-bottom: 12px; padding: 12px 16px; background: #FAFAFA; border-radius: 8px; display: flex; align-items: baseline; gap: 16px; }
+  .typo-sample .label { font-size: 11px; color: #999; width: 80px; flex-shrink: 0; }
+
+  /* ── Component Previews ── */
+  .preview-box {
+    background: #FAFAFA; border: 1px solid #EEEEEE; border-radius: 12px;
+    padding: 32px; margin-bottom: 16px; display: flex; align-items: center;
+    justify-content: center; gap: 16px; flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: #F15A30; color: #fff; border: none; padding: 12px 32px;
+    border-radius: 50px; font-weight: 700; font-size: 15px; cursor: pointer;
+    font-family: inherit; transition: all 0.2s ease;
+  }
+  .btn-primary:hover { background: #D94E26; box-shadow: 0 4px 12px rgba(241,90,48,.2); }
+  .btn-primary.disabled { background: #EEE; color: #999; pointer-events: none; }
+  .btn-secondary {
+    background: #fff; color: #1A1A1A; border: 1px solid #EEEEEE; padding: 12px 32px;
+    border-radius: 50px; font-weight: 700; font-size: 15px; cursor: pointer;
+    font-family: inherit; transition: all 0.2s ease;
+  }
+  .btn-secondary:hover { background: #FFF5F0; border-color: #F15A30; color: #F15A30; }
+  .btn-large {
+    padding: 16px 40px; font-size: 16px;
+  }
+
+  /* Social Buttons */
+  .btn-social {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
+    font-size: 18px; font-weight: 700; font-family: inherit;
+  }
+  .btn-kakao { background: #FEE500; color: #000; }
+  .btn-naver { background: #1EC800; color: #fff; }
+  .btn-facebook { background: #177BF2; color: #fff; }
+  .btn-google { background: #fff; border: 1px solid #BCBCBC; color: #333; }
+
+  /* Card Preview */
+  .card-preview {
+    width: 240px; border: 1px solid #EEEEEE; border-radius: 16px;
+    overflow: hidden; background: #fff; transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .card-preview:hover { border-color: #F15A30; box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-3px); }
+  .card-img { aspect-ratio: 1/1; background: linear-gradient(135deg, #FFE8D6, #FFD4B8); display: flex; align-items: center; justify-content: center; color: #F15A30; font-size: 40px; overflow: hidden; }
+  .card-body { padding: 14px 16px; text-align: center; }
+  .card-stars { font-size: 13px; color: #FACC15; margin-bottom: 4px; }
+  .card-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .card-price { font-size: 15px; font-weight: 700; color: #F15A30; margin-bottom: 12px; }
+  .card-btn { width: 100%; }
+
+  /* Quantity Control */
+  .qty-ctrl {
+    display: inline-flex; align-items: center; border: 1px solid #F15A30;
+    border-radius: 50px; height: 46px; overflow: hidden;
+  }
+  .qty-btn {
+    width: 44px; height: 44px; border: none; background: transparent;
+    font-size: 18px; cursor: pointer; font-family: inherit; color: #1A1A1A;
+    transition: background 0.2s;
+  }
+  .qty-btn:hover { background: #FFF5F0; }
+  .qty-val { width: 40px; text-align: center; font-weight: 700; font-size: 15px; }
+
+  /* Badge */
+  .badge-soldout {
+    display: inline-flex; align-items: center; padding: 0 12px; height: 28px;
+    background: rgba(26,26,26,.88); color: #fff; border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+  }
+
+  /* Progress Bar */
+  .progress-track { height: 8px; background: #EDEDED; border-radius: 100px; overflow: hidden; width: 100%; max-width: 400px; }
+  .progress-fill { height: 100%; background: #F15A30; border-radius: 100px; width: 65%; }
+
+  /* Benefit Banner */
+  .benefit-banner {
+    background: #FFF5F0; border-radius: 10px; padding: 14px 16px;
+    max-width: 400px; width: 100%;
+  }
+  .benefit-header { font-size: 12px; color: #F15A30; font-weight: 700; margin-bottom: 8px; }
+  .benefit-row { font-size: 13px; color: #666; display: flex; justify-content: space-between; margin-bottom: 4px; }
+
+  /* Modal Preview */
+  .modal-preview {
+    background: rgba(0,0,0,0.15); border-radius: 12px; padding: 40px;
+    display: flex; justify-content: center; width: 100%;
+  }
+  .modal-box {
+    background: #fff; border-radius: 16px; padding: 28px; max-width: 320px; width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06); position: relative; text-align: center;
+  }
+  .modal-close {
+    position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
+    border-radius: 50%; background: #F5F5F5; border: none; cursor: pointer;
+    font-size: 16px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Shadow Samples */
+  .shadow-box {
+    width: 120px; height: 80px; background: #fff; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #999;
+  }
+
+  /* Spacing Visual */
+  .spacing-visual { display: flex; align-items: flex-end; gap: 8px; flex-wrap: wrap; }
+  .spacing-block {
+    background: rgba(241,90,48,0.12); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 600; color: #F15A30;
+  }
+
+  /* Radius Visual */
+  .radius-samples { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .radius-box {
+    width: 64px; height: 64px; border: 2px solid #F15A30; display: flex;
+    align-items: center; justify-content: center; font-size: 11px;
+    font-weight: 600; color: #F15A30; background: rgba(241,90,48,0.04);
+  }
+
+  /* Z-Index Visual */
+  .z-stack { position: relative; height: 200px; width: 100%; max-width: 500px; }
+  .z-layer {
+    position: absolute; left: 0; padding: 10px 16px; border-radius: 8px;
+    font-size: 12px; font-weight: 600; width: fit-content; min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Responsive Table */
+  .bp-bar { height: 24px; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 600; color: #fff; }
+
+  /* Grid Demo */
+  .grid-demo { display: grid; gap: 12px; }
+  .grid-cell { background: rgba(241,90,48,0.08); border: 1px dashed rgba(241,90,48,0.3); border-radius: 8px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #F15A30; font-weight: 600; }
+
+  /* Header Diagram */
+  .header-diagram { border: 1px solid #E8E8E8; border-radius: 12px; overflow: hidden; max-width: 600px; width: 100%; font-size: 13px; }
+  .hd-top { background: #000; color: #fff; padding: 8px 16px; font-size: 12px; text-align: center; }
+  .hd-mid { padding: 16px; border-bottom: 1px solid #EFEFEF; display: flex; justify-content: space-between; align-items: center; }
+  .hd-logo { font-size: 20px; font-weight: 800; color: #F15A30; }
+  .hd-icons { display: flex; gap: 16px; color: #666; font-size: 18px; }
+  .hd-nav { padding: 12px 16px; display: flex; gap: 24px; font-size: 14px; font-weight: 600; color: #333; border-bottom: 1px solid #EFEFEF; }
+  .hd-label { position: absolute; right: -90px; font-size: 11px; color: #999; white-space: nowrap; }
+
+  /* Transition Demo */
+  .transition-demo {
+    width: 80px; height: 80px; background: #F15A30; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 11px; font-weight: 600; cursor: pointer;
+  }
+  .transition-demo.t1 { transition: all 0.2s ease; }
+  .transition-demo.t1:hover { transform: scale(1.1); border-radius: 50%; }
+  .transition-demo.t2 { transition: all 0.4s ease-in-out; }
+  .transition-demo.t2:hover { transform: translateY(-8px); box-shadow: 0 8px 24px rgba(241,90,48,0.3); }
+
+  /* Sub-heading */
+  h3 { font-size: 16px; font-weight: 700; margin: 24px 0 12px; color: #333; }
+  h3:first-of-type { margin-top: 0; }
+
+  /* TOC */
+  .toc { columns: 2; gap: 24px; margin-bottom: 32px; }
+  .toc a { display: block; padding: 6px 0; font-size: 14px; color: #666; text-decoration: none; border-bottom: 1px solid #F5F5F5; }
+  .toc a:hover { color: #F15A30; }
+  .toc a span { color: #F15A30; font-weight: 700; margin-right: 8px; }
+
+  /* ── Icons ── */
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .icon-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 16px 8px; border: 1px solid #EEEEEE; border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  .icon-cell:hover { border-color: #F15A30; background: rgba(241,90,48,0.04); }
+  .icon-cell .icon-name { font-size: 11px; color: #999; text-align: center; }
+  .icon-cell svg, .icon-cell i[data-feather] { color: #1A1A1A; }
+  .icon-size-demo { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .icon-size-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .icon-size-label { font-size: 11px; color: #999; }
+
+  /* ── FAQ Accordion ── */
+  .faq-demo { max-width: 600px; width: 100%; }
+  .faq-item {
+    border: 1px solid #EEEEEE; border-radius: 12px; margin-bottom: 10px;
+    overflow: hidden; transition: all 0.3s ease;
+  }
+  .faq-item[open] { border-color: #F15A30; box-shadow: 0 4px 12px rgba(241,90,48,0.06); }
+  .faq-item summary {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 600;
+    color: #1A1A1A; list-style: none; transition: all 0.2s ease;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: "+"; font-size: 20px; font-weight: 400; color: #999;
+    transition: transform 0.3s ease, color 0.3s ease; flex-shrink: 0; margin-left: 16px;
+  }
+  .faq-item[open] summary { color: #F15A30; }
+  .faq-item[open] summary::after { transform: rotate(45deg); color: #F15A30; }
+  .faq-item summary:hover { background: #FAFAFA; }
+  .faq-ans { padding: 0 20px 16px; font-size: 14px; color: #666; line-height: 1.7; }
+
+  /* FAQ v2 (sm-faq with chevron) */
+  .faq-item-v2 {
+    border-bottom: 1px solid #EEEEEE; transition: all 0.3s ease;
+  }
+  .faq-item-v2 summary {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0; cursor: pointer; font-size: 15px; font-weight: 600;
+    color: #1A1A1A; list-style: none; transition: all 0.2s ease;
+  }
+  .faq-item-v2 summary::-webkit-details-marker { display: none; }
+  .faq-icon {
+    width: 24px; height: 24px; position: relative; flex-shrink: 0;
+  }
+  .faq-icon::before {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 8px; height: 8px; border-right: 2px solid #999; border-bottom: 2px solid #999;
+    transform: translate(-50%, -60%) rotate(45deg); transition: transform 0.3s ease;
+  }
+  .faq-item-v2[open] .faq-icon::before { transform: translate(-50%, -40%) rotate(-135deg); }
+  .faq-item-v2[open] summary { color: #F15A30; }
+  .faq-item-v2[open] .faq-icon::before { border-color: #F15A30; }
+  .faq-ans-v2 { padding: 0 0 18px; font-size: 14px; color: #666; line-height: 1.7; }
+
+  /* ── Modal Types ── */
+  .modal-type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .modal-type-card {
+    border: 1px solid #EEEEEE; border-radius: 12px; overflow: hidden;
+  }
+  .modal-type-label {
+    background: #FAFAFA; padding: 10px 16px; font-size: 12px; font-weight: 700;
+    color: #F15A30; border-bottom: 1px solid #EEEEEE; text-transform: uppercase;
+  }
+  .modal-type-body { padding: 20px; }
+
+  /* Drawer */
+  .drawer-demo {
+    position: relative; width: 100%; max-width: 320px;
+    height: 400px; border: 1px solid #E8E8E8; border-radius: 16px;
+    overflow: hidden; background: #FAFAFA;
+  }
+  .drawer-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: #fff; border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08); padding: 20px;
+    max-height: 60%; transition: max-height 0.35s cubic-bezier(.32,.72,0,1);
+  }
+  .drawer-handle {
+    width: 40px; height: 4px; background: #D9D9D9; border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .drawer-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ COVER ═══════ -->
+<div class="cover">
+  <div class="container">
+    <h1>Seamonster Design System</h1>
+    <p>씨몬스터 공식몰 UI/UX 디자인 시스템 매뉴얼</p>
+    <div class="meta">Cafe24 Platform &middot; Version 1.0 &middot; 2026.04</div>
+  </div>
+</div>
+
+<!-- ═══════ TOC ═══════ -->
+<div class="container" style="padding-top:40px;">
+  <div class="section-title" style="margin-bottom:20px;"><span class="num">i</span> 목차</div>
+  <div class="toc">
+    <a href="#colors"><span>01</span> 컬러 시스템</a>
+    <a href="#typo"><span>02</span> 타이포그래피</a>
+    <a href="#spacing"><span>03</span> 간격 시스템</a>
+    <a href="#radius"><span>04</span> Border Radius</a>
+    <a href="#shadows"><span>05</span> 그림자</a>
+    <a href="#zindex"><span>06</span> Z-Index 계층</a>
+    <a href="#buttons"><span>07</span> 버튼</a>
+    <a href="#cards"><span>08</span> 상품 카드</a>
+    <a href="#components"><span>09</span> UI 컴포넌트</a>
+    <a href="#header"><span>10</span> 헤더</a>
+    <a href="#layout"><span>11</span> 레이아웃</a>
+    <a href="#responsive"><span>12</span> 반응형</a>
+    <a href="#transitions"><span>13</span> 트랜지션</a>
+    <a href="#naming"><span>14</span> 클래스 네이밍</a>
+    <a href="#icons"><span>15</span> 아이콘 (Feather)</a>
+    <a href="#faq"><span>16</span> FAQ 아코디언</a>
+    <a href="#modals"><span>17</span> 모달 & 드로어</a>
+  </div>
+</div>
+
+<!-- ═══════ 01. COLORS ═══════ -->
+<div class="container">
+<section id="colors">
+  <div class="section-title"><span class="num">1</span> 컬러 시스템</div>
+  <p class="section-desc">모든 색상은 CSS 변수로 사용합니다. 하드코딩 금지.</p>
+
+  <h3>Primary (브랜드)</h3>
+  <div class="color-grid">
+    <div class="swatch-row"><div class="swatch" style="background:#F15A30"></div><div class="swatch-info"><div class="name">Orange (Main)</div><div class="hex">--sm-orange: #F15A30</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#D94E26"></div><div class="swatch-info"><div class="name">Orange Hover</div><div class="hex">--sm-orange-hover: #D94E26</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(241,90,48,0.06)"></div><div class="swatch-info"><div class="name">Orange Light</div><div class="hex">--sm-orange-light: rgba(241,90,48,0.06)</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:rgba(241,90,48,0.12)"></div><div class="swatch-info"><div class="name">Orange Border</div><div class="hex">--sm-orange-border: rgba(241,90,48,0.12)</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#FFF5F0"></div><div class="swatch-info"><div class="name">Warm BG</div><div class="hex">--sm-bg-warm: #FFF5F0</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#FFF4B3"></div><div class="swatch-info"><div class="name">Highlight</div><div class="hex">--sm-highlight: #FFF4B3</div></div></div>
+  </div>
+
+  <h3>Neutral (텍스트 & 배경)</h3>
+  <div class="color-grid">
+    <div class="swatch-row"><div class="swatch" style="background:#1A1A1A"></div><div class="swatch-info"><div class="name">Black</div><div class="hex">--sm-black: #1A1A1A</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#37352F"></div><div class="swatch-info"><div class="name">Dark</div><div class="hex">--sm-dark: #37352F</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#666666"></div><div class="swatch-info"><div class="name">Text Mid</div><div class="hex">--sm-text-mid: #666666</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#999999"></div><div class="swatch-info"><div class="name">Text Light</div><div class="hex">--sm-text-light: #999999</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#EEEEEE"></div><div class="swatch-info"><div class="name">Border</div><div class="hex">--sm-border: #EEEEEE</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#FAFAFA"></div><div class="swatch-info"><div class="name">BG</div><div class="hex">--sm-bg: #FAFAFA</div></div></div>
+  </div>
+
+  <h3>External (소셜 & 특수)</h3>
+  <div class="color-grid">
+    <div class="swatch-row"><div class="swatch" style="background:#FEE500"></div><div class="swatch-info"><div class="name">Kakao</div><div class="hex">#FEE500</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#1EC800"></div><div class="swatch-info"><div class="name">Naver</div><div class="hex">#1EC800</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#177BF2"></div><div class="swatch-info"><div class="name">Facebook</div><div class="hex">#177BF2</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#FACC15"></div><div class="swatch-info"><div class="name">Star Rating</div><div class="hex">#FACC15</div></div></div>
+    <div class="swatch-row"><div class="swatch" style="background:#FC4B29"></div><div class="swatch-info"><div class="name">Cart Badge</div><div class="hex">#FC4B29</div></div></div>
+  </div>
+</section>
+
+<!-- ═══════ 02. TYPOGRAPHY ═══════ -->
+<section id="typo" class="page-break">
+  <div class="section-title"><span class="num">2</span> 타이포그래피</div>
+  <p class="section-desc">Pretendard Variable 사용. 최소 폰트 크기 13px.</p>
+
+  <table>
+    <tr><th>레벨</th><th>크기</th><th>굵기</th><th>용도</th><th>미리보기</th></tr>
+    <tr><td>Display</td><td><code>42px</code></td><td>800-900</td><td>메인 배너</td><td style="font-size:28px;font-weight:800;">씨몬스터</td></tr>
+    <tr><td>H1</td><td><code>32px</code></td><td>700-800</td><td>페이지 타이틀</td><td style="font-size:24px;font-weight:700;">구매하기</td></tr>
+    <tr><td>H2</td><td><code>28px</code></td><td>700</td><td>섹션 타이틀</td><td style="font-size:21px;font-weight:700;">정기배송</td></tr>
+    <tr><td>H3</td><td><code>22px</code></td><td>600-700</td><td>서브 섹션</td><td style="font-size:18px;font-weight:600;">베스트 상품</td></tr>
+    <tr><td>H4</td><td><code>19px</code></td><td>600</td><td>카드 타이틀</td><td style="font-size:16px;font-weight:600;">연어 레시피</td></tr>
+    <tr><td>Body L</td><td><code>17px</code></td><td>700</td><td>상품명</td><td style="font-size:17px;font-weight:700;">뉴질랜드 청정 연어</td></tr>
+    <tr><td>Body</td><td><code>15-16px</code></td><td>400</td><td>기본 본문</td><td style="font-size:15px;">신선한 원재료로 만든 사료입니다</td></tr>
+    <tr><td>Label</td><td><code>14px</code></td><td>500</td><td>라벨</td><td style="font-size:14px;font-weight:500;">배송안내</td></tr>
+    <tr><td>Caption</td><td><code>13px</code></td><td>400</td><td>캡션</td><td style="font-size:13px;color:#999;">무료배송 3만원 이상</td></tr>
+    <tr><td>Small</td><td><code>12px</code></td><td>500-600</td><td>뱃지, 태그</td><td style="font-size:12px;font-weight:600;">NEW</td></tr>
+  </table>
+
+  <h3>폰트 굵기 가이드</h3>
+  <table>
+    <tr><th>Weight</th><th>용도</th><th>미리보기</th></tr>
+    <tr><td><code>400</code> Regular</td><td>본문 텍스트</td><td style="font-weight:400;">일반 본문에 사용합니다</td></tr>
+    <tr><td><code>500</code> Medium</td><td>라벨, 메뉴</td><td style="font-weight:500;">라벨과 메뉴에 사용합니다</td></tr>
+    <tr><td><code>600</code> SemiBold</td><td>카테고리, 소제목</td><td style="font-weight:600;">카테고리 네비게이션</td></tr>
+    <tr><td><code>700</code> Bold</td><td>버튼, 가격, 상품명</td><td style="font-weight:700;">₩12,900</td></tr>
+    <tr><td><code>800</code> ExtraBold</td><td>배너 타이틀</td><td style="font-weight:800;">오늘의 특가</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 03. SPACING ═══════ -->
+<section id="spacing">
+  <div class="section-title"><span class="num">3</span> 간격 시스템</div>
+  <p class="section-desc">8px 기반 간격 체계. 일관된 리듬감을 유지합니다.</p>
+
+  <div class="spacing-visual" style="margin-bottom:24px;">
+    <div class="spacing-block" style="width:4px;height:4px;" title="4px"></div>
+    <div class="spacing-block" style="width:8px;height:8px;">8</div>
+    <div class="spacing-block" style="width:12px;height:16px;">12</div>
+    <div class="spacing-block" style="width:16px;height:24px;">16</div>
+    <div class="spacing-block" style="width:24px;height:32px;">24</div>
+    <div class="spacing-block" style="width:32px;height:40px;">32</div>
+    <div class="spacing-block" style="width:48px;height:48px;">48</div>
+    <div class="spacing-block" style="width:64px;height:56px;">64</div>
+    <div class="spacing-block" style="width:80px;height:64px;">80</div>
+    <div class="spacing-block" style="width:100px;height:72px;">120</div>
+  </div>
+
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td>2xs</td><td><code>4px</code></td><td>인라인 마이크로 간격</td></tr>
+    <tr><td>xs</td><td><code>8px</code></td><td>아이콘-텍스트 간격</td></tr>
+    <tr><td>sm</td><td><code>12px</code></td><td>카드 내부 요소 간격</td></tr>
+    <tr><td>md</td><td><code>16px</code></td><td>모바일 좌우 패딩</td></tr>
+    <tr><td>lg / --sm-pad</td><td><code>24px</code></td><td>컨테이너 기본 패딩</td></tr>
+    <tr><td>xl</td><td><code>32px</code></td><td>데스크톱 섹션 패딩</td></tr>
+    <tr><td>2xl</td><td><code>48px</code></td><td>메인 컨테이너 상단</td></tr>
+    <tr><td>3xl</td><td><code>64-80px</code></td><td>섹션 간 간격</td></tr>
+    <tr><td>4xl</td><td><code>100-120px</code></td><td>페이지 하단 여백</td></tr>
+  </table>
+
+  <h3>컨테이너</h3>
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td>--sm-container</td><td><code>720px</code></td><td>좁은 콘텐츠 (주문서)</td></tr>
+    <tr><td>--sm-container-width</td><td><code>1320px</code></td><td>넓은 레이아웃</td></tr>
+    <tr><td>--sm-side-padding</td><td><code>20px</code></td><td>사이드 패딩</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 04. RADIUS ═══════ -->
+<section id="radius">
+  <div class="section-title"><span class="num">4</span> Border Radius</div>
+  <p class="section-desc">부드러운 모서리로 친근한 느낌을 줍니다.</p>
+
+  <div class="radius-samples" style="margin-bottom:24px;">
+    <div class="radius-box" style="border-radius:8px;">8px</div>
+    <div class="radius-box" style="border-radius:12px;">12px</div>
+    <div class="radius-box" style="border-radius:16px;">16px</div>
+    <div class="radius-box" style="border-radius:50px;width:100px;">50px</div>
+    <div class="radius-box" style="border-radius:50%;">50%</div>
+  </div>
+
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td>--sm-radius-sm</td><td><code>8px</code></td><td>입력 필드, 작은 요소</td></tr>
+    <tr><td>--sm-radius</td><td><code>8px</code></td><td>기본 라운딩</td></tr>
+    <tr><td>--sm-radius-lg</td><td><code>12px</code></td><td>혜택 배너, 중간 카드</td></tr>
+    <tr><td>--sm-radius-card</td><td><code>16px</code></td><td>상품 카드, 모달</td></tr>
+    <tr><td>--sm-radius-btn</td><td><code>12px</code></td><td>사각 버튼</td></tr>
+    <tr><td>--sm-radius-pill</td><td><code>50px</code></td><td>알약형 CTA 버튼</td></tr>
+    <tr><td>--sm-radius-circle</td><td><code>50%</code></td><td>원형 아이콘, 뱃지</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 05. SHADOWS ═══════ -->
+<section id="shadows">
+  <div class="section-title"><span class="num">5</span> 그림자</div>
+  <p class="section-desc">가벼운 그림자로 미묘한 깊이감을 표현합니다. (opacity 0.04~0.06)</p>
+
+  <div class="preview-box">
+    <div class="shadow-box" style="box-shadow:0 2px 12px rgba(0,0,0,0.06);">Header</div>
+    <div class="shadow-box" style="box-shadow:0 4px 12px rgba(0,0,0,0.04);">Card</div>
+    <div class="shadow-box" style="box-shadow:0 10px 30px rgba(0,0,0,0.06);">Float</div>
+    <div class="shadow-box" style="box-shadow:0 4px 20px rgba(241,90,48,.08);">Orange</div>
+    <div class="shadow-box" style="box-shadow:0 8px 24px rgba(0,0,0,0.06);">Hover</div>
+  </div>
+
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td>--sm-shadow-header</td><td><code>0 2px 12px rgba(0,0,0,0.06)</code></td><td>헤더 고정 시</td></tr>
+    <tr><td>--sm-shadow-card</td><td><code>0 4px 12px rgba(0,0,0,0.04)</code></td><td>카드 기본</td></tr>
+    <tr><td>--sm-shadow-float</td><td><code>0 10px 30px rgba(0,0,0,0.06)</code></td><td>모달, 플로팅</td></tr>
+    <tr><td>Orange Glow</td><td><code>0 4px 20px rgba(241,90,48,.08)</code></td><td>CTA hover</td></tr>
+    <tr><td>Card Hover</td><td><code>0 8px 24px rgba(0,0,0,0.06)</code></td><td>카드 호버</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 06. Z-INDEX ═══════ -->
+<section id="zindex">
+  <div class="section-title"><span class="num">6</span> Z-Index 계층</div>
+  <p class="section-desc">겹침 순서를 일관되게 관리합니다.</p>
+
+  <div class="preview-box" style="justify-content:flex-start;">
+    <div class="z-stack">
+      <div class="z-layer" style="background:#FAFAFA;color:#666;top:160px;left:0;">z: 998 &mdash; TOC</div>
+      <div class="z-layer" style="background:#E8E8E8;color:#555;top:120px;left:20px;">z: 1000 &mdash; Float Button</div>
+      <div class="z-layer" style="background:#666;color:#fff;top:80px;left:40px;">z: 9999 &mdash; Header</div>
+      <div class="z-layer" style="background:#F15A30;color:#fff;top:40px;left:60px;">z: 10001 &mdash; Toast</div>
+      <div class="z-layer" style="background:#1A1A1A;color:#fff;top:0;left:80px;">z: 1000000001 &mdash; Modal</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>토큰</th><th>값</th><th>용도</th></tr>
+    <tr><td>--sm-z-toc</td><td><code>998</code></td><td>목차 네비게이션</td></tr>
+    <tr><td>--sm-z-float-btn</td><td><code>1000</code></td><td>플로팅 버튼</td></tr>
+    <tr><td>--sm-z-header</td><td><code>9999</code></td><td>고정 헤더</td></tr>
+    <tr><td>--sm-z-toast</td><td><code>10001</code></td><td>토스트 알림</td></tr>
+    <tr><td>--sm-z-modal</td><td><code>1000000001</code></td><td>모달 오버레이</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 07. BUTTONS ═══════ -->
+<section id="buttons" class="page-break">
+  <div class="section-title"><span class="num">7</span> 버튼</div>
+  <p class="section-desc">CTA는 알약형(pill), 보조는 아웃라인. hover 시 색상 변화.</p>
+
+  <h3>Primary & Secondary</h3>
+  <div class="preview-box">
+    <button class="btn-primary">담기</button>
+    <button class="btn-primary btn-large">주문하기</button>
+    <button class="btn-primary disabled">품절</button>
+    <button class="btn-secondary">비교하기</button>
+  </div>
+
+  <table>
+    <tr><th>속성</th><th>Primary (CTA)</th><th>Secondary (Outline)</th></tr>
+    <tr><td>배경</td><td><code>var(--sm-orange)</code></td><td><code>#FFFFFF</code></td></tr>
+    <tr><td>글자색</td><td><code>#FFFFFF</code></td><td><code>var(--sm-black)</code></td></tr>
+    <tr><td>테두리</td><td>없음</td><td><code>1px solid var(--sm-border)</code></td></tr>
+    <tr><td>패딩</td><td><code>12px 0</code> (풀폭) / <code>12px 32px</code></td><td><code>12px 32px</code></td></tr>
+    <tr><td>라운딩</td><td><code>50px</code></td><td><code>50px</code></td></tr>
+    <tr><td>폰트</td><td><code>700 15px</code></td><td><code>700 15px</code></td></tr>
+    <tr><td>Hover 배경</td><td><code>var(--sm-orange-hover)</code></td><td><code>var(--sm-bg-warm)</code></td></tr>
+    <tr><td>Hover 효과</td><td>shadow <code>0 4px 12px rgba(241,90,48,.2)</code></td><td>border/color → orange</td></tr>
+    <tr><td>Disabled</td><td>bg <code>#EEE</code>, color <code>#999</code></td><td>opacity 0.5</td></tr>
+  </table>
+
+  <h3>Large CTA (결제)</h3>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>패딩</td><td><code>16px-18px</code> (높이 증가)</td></tr>
+    <tr><td>폰트</td><td><code>700 16px</code></td></tr>
+    <tr><td>너비</td><td>모바일에서 <code>width: 100%</code></td></tr>
+  </table>
+
+  <h3>소셜 로그인</h3>
+  <div class="preview-box">
+    <button class="btn-social btn-kakao">K</button>
+    <button class="btn-social btn-naver">N</button>
+    <button class="btn-social btn-facebook">f</button>
+    <button class="btn-social btn-google">G</button>
+  </div>
+
+  <table>
+    <tr><th>서비스</th><th>배경</th><th>글자색</th><th>테두리</th></tr>
+    <tr><td>Kakao</td><td><code>#FEE500</code></td><td><code>#000</code></td><td>없음</td></tr>
+    <tr><td>Naver</td><td><code>#1EC800</code></td><td><code>#FFF</code></td><td>없음</td></tr>
+    <tr><td>Facebook</td><td><code>#177BF2</code></td><td><code>#FFF</code></td><td>없음</td></tr>
+    <tr><td>Google</td><td><code>#FFF</code></td><td><code>#333</code></td><td><code>1px solid #BCBCBC</code></td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 08. CARDS ═══════ -->
+<section id="cards">
+  <div class="section-title"><span class="num">8</span> 상품 카드</div>
+  <p class="section-desc">hover 시 상승 + 오렌지 테두리. 이미지 1:1 비율.</p>
+
+  <div class="preview-box" style="gap:24px;">
+    <div class="card-preview">
+      <div class="card-img"><i data-feather="package" width="40" height="40"></i></div>
+      <div class="card-body">
+        <div class="card-stars"><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i> <span style="color:#999;font-size:12px;">(4.9)</span></div>
+        <div class="card-name">뉴질랜드 청정 연어</div>
+        <div class="card-price">&#8361;12,900</div>
+        <button class="btn-primary card-btn">담기</button>
+      </div>
+    </div>
+    <div class="card-preview" style="position:relative;">
+      <div style="position:absolute;top:12px;left:12px;z-index:1;"><span class="badge-soldout">품절</span></div>
+      <div class="card-img" style="opacity:0.5;"><i data-feather="package" width="40" height="40"></i></div>
+      <div class="card-body">
+        <div class="card-stars"><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i><i data-feather="star" width="14" height="14" fill="#FACC15" stroke="#FACC15"></i> <span style="color:#999;font-size:12px;">(4.5)</span></div>
+        <div class="card-name">유기농 닭가슴살</div>
+        <div class="card-price">&#8361;9,800</div>
+        <button class="btn-primary card-btn disabled">품절</button>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>속성</th><th>기본</th><th>Hover</th></tr>
+    <tr><td>테두리</td><td><code>1px solid #EEEEEE</code></td><td><code>1px solid var(--sm-orange)</code></td></tr>
+    <tr><td>라운딩</td><td colspan="2"><code>16px</code></td></tr>
+    <tr><td>그림자</td><td><code>var(--sm-shadow-card)</code></td><td><code>0 8px 24px rgba(0,0,0,0.06)</code></td></tr>
+    <tr><td>변환</td><td>없음</td><td><code>translateY(-3px)</code></td></tr>
+    <tr><td>이미지</td><td><code>aspect-ratio: 1/1</code></td><td><code>scale(1.05)</code>, 0.4s</td></tr>
+  </table>
+
+  <h3>카드 내부 구조</h3>
+  <table>
+    <tr><th>요소</th><th>크기</th><th>굵기</th><th>색상</th></tr>
+    <tr><td>별점</td><td><code>13px</code></td><td>400</td><td><code>#FACC15</code></td></tr>
+    <tr><td>상품명</td><td><code>17px</code></td><td>700</td><td><code>var(--sm-black)</code></td></tr>
+    <tr><td>가격</td><td><code>15px</code></td><td>700</td><td><code>var(--sm-orange)</code></td></tr>
+    <tr><td>영양정보 링크</td><td><code>13px</code></td><td>400</td><td>밑줄</td></tr>
+    <tr><td>품절 뱃지</td><td><code>12px</code></td><td>600</td><td>bg <code>rgba(26,26,26,.88)</code>, color white</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 09. COMPONENTS ═══════ -->
+<section id="components" class="page-break">
+  <div class="section-title"><span class="num">9</span> UI 컴포넌트</div>
+  <p class="section-desc">주요 인터페이스 컴포넌트 사양.</p>
+
+  <h3>수량 조절기</h3>
+  <div class="preview-box">
+    <div class="qty-ctrl">
+      <button class="qty-btn">&minus;</button>
+      <span class="qty-val">1</span>
+      <button class="qty-btn">&plus;</button>
+    </div>
+  </div>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>테두리</td><td><code>1px solid var(--sm-orange)</code></td></tr>
+    <tr><td>라운딩</td><td><code>50px</code></td></tr>
+    <tr><td>높이</td><td><code>46px</code></td></tr>
+    <tr><td>버튼 크기</td><td><code>44px &times; 44px</code></td></tr>
+    <tr><td>버튼 Hover</td><td>bg <code>var(--sm-bg-warm)</code></td></tr>
+  </table>
+
+  <h3>진행률 바 (배송비 게이지)</h3>
+  <div class="preview-box" style="flex-direction:column;gap:8px;">
+    <div class="progress-track"><div class="progress-fill"></div></div>
+    <div style="font-size:13px;color:#999;">무료배송까지 <span style="color:#F15A30;font-weight:700;">12,100원</span> 남았습니다</div>
+  </div>
+  <table>
+    <tr><th>속성</th><th>트랙</th><th>채우기</th></tr>
+    <tr><td>높이</td><td><code>8px</code></td><td><code>8px</code></td></tr>
+    <tr><td>배경</td><td><code>#EDEDED</code></td><td><code>var(--sm-orange)</code></td></tr>
+    <tr><td>라운딩</td><td colspan="2"><code>100px</code></td></tr>
+    <tr><td>애니메이션</td><td>-</td><td><code>width 0.6s cubic-bezier(.25,.46,.45,.94)</code></td></tr>
+  </table>
+
+  <h3>혜택 배너</h3>
+  <div class="preview-box">
+    <div class="benefit-banner">
+      <div class="benefit-header"><i data-feather="gift" width="14" height="14" style="vertical-align:middle;margin-right:4px;"></i> 첫 구매 혜택</div>
+      <div class="benefit-row"><span>첫 구매 할인</span><span style="font-weight:600;">10%</span></div>
+      <div class="benefit-row"><span>무료배송 쿠폰</span><span style="font-weight:600;">1장</span></div>
+      <div class="benefit-row"><span>적립금</span><span style="font-weight:600;">3,000원</span></div>
+    </div>
+  </div>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>배경</td><td><code>var(--sm-bg-warm)</code> = #FFF5F0</td></tr>
+    <tr><td>라운딩</td><td><code>10px</code></td></tr>
+    <tr><td>패딩</td><td><code>14px 16px</code></td></tr>
+    <tr><td>헤더</td><td><code>12px</code>, color <code>var(--sm-orange)</code>, 700</td></tr>
+    <tr><td>본문</td><td><code>13px</code>, color <code>var(--sm-text-mid)</code></td></tr>
+  </table>
+
+  <h3>모달</h3>
+  <div class="preview-box">
+    <div class="modal-preview">
+      <div class="modal-box">
+        <button class="modal-close">&times;</button>
+        <div style="font-size:17px;font-weight:700;margin-bottom:8px;">영양 정보</div>
+        <div style="font-size:14px;color:#666;margin-bottom:16px;">단백질 32% | 지방 15% | 수분 10%</div>
+        <button class="btn-primary" style="width:100%;padding:12px;">확인</button>
+      </div>
+    </div>
+  </div>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>배경</td><td><code>#FFFFFF</code></td></tr>
+    <tr><td>라운딩</td><td><code>16px</code></td></tr>
+    <tr><td>최대 너비</td><td><code>440px</code></td></tr>
+    <tr><td>그림자</td><td><code>var(--sm-shadow-float)</code></td></tr>
+    <tr><td>오버레이</td><td><code>rgba(0,0,0,0.6)</code> + <code>backdrop-filter: blur(4px)</code></td></tr>
+    <tr><td>닫기 버튼</td><td><code>32px</code> 원형, bg white, 우상단</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 10. HEADER ═══════ -->
+<section id="header">
+  <div class="section-title"><span class="num">10</span> 헤더</div>
+  <p class="section-desc">총 높이 145px. 스크롤 시 자동 숨김/표시.</p>
+
+  <div class="preview-box">
+    <div class="header-diagram">
+      <div class="hd-top"><i data-feather="package" width="14" height="14" style="vertical-align:middle;margin-right:4px;"></i> 3만원 이상 무료배송 &middot; 첫 구매 10% 할인</div>
+      <div class="hd-mid">
+        <div class="hd-logo">seamonster</div>
+        <div class="hd-icons"><i data-feather="search" width="20" height="20"></i> &nbsp; <i data-feather="user" width="20" height="20"></i> &nbsp; <i data-feather="shopping-cart" width="20" height="20"></i></div>
+      </div>
+      <div class="hd-nav">
+        <span>구매하기</span>
+        <span>정기배송</span>
+        <span>레시피</span>
+        <span>블로그</span>
+        <span>리뷰</span>
+        <span>회원혜택</span>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>영역</th><th>높이</th><th>배경</th><th>비고</th></tr>
+    <tr><td>상단 배너</td><td><code>40px</code></td><td><code>#000</code></td><td>흰 텍스트, 12px</td></tr>
+    <tr><td>로고 영역</td><td><code>90px</code></td><td><code>#FFF</code></td><td>검색/마이/장바구니 아이콘</td></tr>
+    <tr><td>카테고리 바</td><td><code>65px</code></td><td><code>#FFF</code></td><td>16px, 600 weight, border-bottom #efefef</td></tr>
+  </table>
+
+  <h3>스크롤 동작</h3>
+  <table>
+    <tr><th>트리거</th><th>동작</th><th>CSS</th></tr>
+    <tr><td>60px 스크롤</td><td>헤더 고정</td><td><code>position: fixed</code></td></tr>
+    <tr><td>아래 스크롤</td><td>헤더 숨김</td><td><code>translateY(-80px)</code></td></tr>
+    <tr><td>위 스크롤</td><td>헤더 표시</td><td><code>translateY(0)</code></td></tr>
+    <tr><td>트랜지션</td><td>-</td><td><code>all 0.4s ease-in-out</code></td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 11. LAYOUT ═══════ -->
+<section id="layout" class="page-break">
+  <div class="section-title"><span class="num">11</span> 레이아웃</div>
+  <p class="section-desc">2단 구조 (콘텐츠 + 사이드바). 모바일에서는 1단.</p>
+
+  <h3>2단 레이아웃 (골라담기 페이지)</h3>
+  <div class="preview-box" style="padding:20px;">
+    <div style="display:flex;gap:16px;width:100%;max-width:600px;">
+      <div style="flex:1;background:rgba(241,90,48,0.06);border:1px dashed rgba(241,90,48,0.3);border-radius:8px;padding:16px;min-height:160px;">
+        <div style="font-size:12px;font-weight:700;color:#F15A30;margin-bottom:8px;">LEFT (flex: 1)</div>
+        <div style="font-size:11px;color:#999;line-height:1.6;">
+          &bull; 배너<br>
+          &bull; 퀴즈 CTA<br>
+          &bull; 상품 그리드<br>
+          &bull; 상세 정보
+        </div>
+      </div>
+      <div style="width:140px;background:rgba(241,90,48,0.06);border:1px dashed rgba(241,90,48,0.3);border-radius:8px;padding:16px;">
+        <div style="font-size:12px;font-weight:700;color:#F15A30;margin-bottom:8px;">RIGHT (380px)</div>
+        <div style="font-size:11px;color:#999;line-height:1.6;">
+          sticky<br>top: 40px<br><br>주문 요약
+        </div>
+      </div>
+    </div>
+  </div>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>최대 너비</td><td><code>1320px</code></td></tr>
+    <tr><td>패딩</td><td><code>48px 32px</code></td></tr>
+    <tr><td>좌측</td><td><code>flex: 1</code></td></tr>
+    <tr><td>우측</td><td><code>width: 380px</code>, <code>position: sticky; top: 40px</code></td></tr>
+    <tr><td>간격</td><td><code>gap: 48px</code></td></tr>
+  </table>
+
+  <h3>상품 그리드</h3>
+  <div class="preview-box" style="flex-direction:column;gap:20px;">
+    <div>
+      <div style="font-size:12px;color:#999;margin-bottom:8px;">Desktop (961px+) &mdash; 3열</div>
+      <div class="grid-demo" style="grid-template-columns:repeat(3,1fr);width:100%;max-width:500px;">
+        <div class="grid-cell">1</div><div class="grid-cell">2</div><div class="grid-cell">3</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;color:#999;margin-bottom:8px;">Tablet (768-960px) &mdash; 2열</div>
+      <div class="grid-demo" style="grid-template-columns:repeat(2,1fr);width:100%;max-width:340px;">
+        <div class="grid-cell">1</div><div class="grid-cell">2</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;color:#999;margin-bottom:8px;">Mobile (~767px) &mdash; 1열</div>
+      <div class="grid-demo" style="grid-template-columns:1fr;width:100%;max-width:180px;">
+        <div class="grid-cell">1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ 12. RESPONSIVE ═══════ -->
+<section id="responsive">
+  <div class="section-title"><span class="num">12</span> 반응형 디자인</div>
+  <p class="section-desc">모바일 우선. clamp()로 유동적 크기 조절.</p>
+
+  <h3>브레이크포인트</h3>
+  <table>
+    <tr><th>이름</th><th>값</th><th>바</th></tr>
+    <tr><td>Mobile S</td><td><code>480px</code></td><td><div class="bp-bar" style="width:80px;background:#FACC15;color:#000;">480</div></td></tr>
+    <tr><td>Mobile</td><td><code>767px</code></td><td><div class="bp-bar" style="width:120px;background:#F15A30;">767</div></td></tr>
+    <tr><td>Tablet</td><td><code>960px</code></td><td><div class="bp-bar" style="width:170px;background:#D94E26;">960</div></td></tr>
+    <tr><td>Desktop</td><td><code>1024px</code></td><td><div class="bp-bar" style="width:200px;background:#177BF2;">1024</div></td></tr>
+    <tr><td>Wide</td><td><code>1200px</code></td><td><div class="bp-bar" style="width:240px;background:#666;">1200</div></td></tr>
+    <tr><td>XL</td><td><code>1440px</code></td><td><div class="bp-bar" style="width:280px;background:#1A1A1A;">1440</div></td></tr>
+  </table>
+
+  <h3>반응형 전략</h3>
+  <table>
+    <tr><th>규칙</th><th>내용</th></tr>
+    <tr><td>기본 접근</td><td>모바일 우선 (Mobile First)</td></tr>
+    <tr><td>유동 크기</td><td>제목: <code>clamp(22px, 5vw, 32px)</code> / 패딩: <code>clamp(16px, 4vw, 24px)</code></td></tr>
+    <tr><td>가시성 클래스</td><td><code>.display-m</code> (모바일만) / <code>.display-pc</code> (데스크톱만)</td></tr>
+    <tr><td>모바일 고정 바</td><td>하단 고정 <code>#orderFixArea</code>, 데스크톱에서 <code>display:none</code></td></tr>
+    <tr><td>터치 타겟</td><td>최소 <code>44px</code></td></tr>
+    <tr><td>Hover 분리</td><td><code>@media (hover: hover)</code> 사용</td></tr>
+    <tr><td>노치 대응</td><td><code>env(safe-area-inset-bottom, 0px)</code></td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 13. TRANSITIONS ═══════ -->
+<section id="transitions">
+  <div class="section-title"><span class="num">13</span> 트랜지션 & 애니메이션</div>
+  <p class="section-desc">부드럽고 자연스러운 전환. Hover로 미리보기 가능.</p>
+
+  <div class="preview-box no-print">
+    <div class="transition-demo t1">0.2s ease<br><span style="font-size:9px;opacity:0.7;">hover me</span></div>
+    <div class="transition-demo t2">0.4s ease<br><span style="font-size:9px;opacity:0.7;">hover me</span></div>
+  </div>
+
+  <table>
+    <tr><th>용도</th><th>값</th><th>적용 대상</th></tr>
+    <tr><td>기본</td><td><code>all 0.2s ease</code></td><td>버튼, 링크, 일반 인터랙션</td></tr>
+    <tr><td>헤더/배너</td><td><code>all 0.4s ease-in-out</code></td><td>헤더 고정/숨김, 배너 전환</td></tr>
+    <tr><td>부드러운 변환</td><td><code>transform 0.3s cubic-bezier(.4,.4,0,1)</code></td><td>카드 이미지 확대</td></tr>
+    <tr><td>진행률</td><td><code>width 0.6s cubic-bezier(.25,.46,.45,.94)</code></td><td>게이지 채우기</td></tr>
+  </table>
+
+  <h3>키프레임 애니메이션</h3>
+  <table>
+    <tr><th>이름</th><th>효과</th><th>용도</th></tr>
+    <tr><td><code>transformIcon</code></td><td>opacity 0→1</td><td>아이콘 페이드 인</td></tr>
+    <tr><td><code>transformCategory</code></td><td>opacity + width 슬라이드</td><td>카테고리 전환</td></tr>
+    <tr><td><code>spinner</code></td><td>rotate 360deg</td><td>로딩 스피너</td></tr>
+    <tr><td><code>bpop</code></td><td>scale 0.9→1</td><td>팝인 효과</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 14. NAMING ═══════ -->
+<section id="naming">
+  <div class="section-title"><span class="num">14</span> 클래스 네이밍 규칙</div>
+  <p class="section-desc">접두사로 영역을 구분합니다.</p>
+
+  <table>
+    <tr><th>접두사</th><th>의미</th><th>예시</th></tr>
+    <tr><td><code>sm-</code></td><td>씨몬스터 커스텀</td><td><code>.sm-header</code>, <code>.sm-toast</code>, <code>.sm-modal</code></td></tr>
+    <tr><td><code>pg-</code></td><td>상품 그리드</td><td><code>.pg-card</code>, <code>.pg-body</code>, <code>.pg-img</code>, <code>.pg-price</code></td></tr>
+    <tr><td><code>xans-</code></td><td>Cafe24 기본 모듈</td><td><code>.xans-product</code>, <code>.xans-order</code></td></tr>
+    <tr><td><code>display-</code></td><td>반응형 가시성</td><td><code>.display-m</code>, <code>.display-pc</code></td></tr>
+  </table>
+
+  <h3>BEM 변형 구조</h3>
+  <table>
+    <tr><th>블록</th><th>요소</th><th>용도</th></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-img</code></td><td>카드 이미지</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-body</code></td><td>카드 본문</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-name</code></td><td>상품명</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-price</code></td><td>가격</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-stars</code></td><td>별점</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-action</code></td><td>액션 영역 (버튼)</td></tr>
+    <tr><td><code>.pg-card</code></td><td><code>.pg-soldout-badge</code></td><td>품절 뱃지</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 15. ICONS ═══════ -->
+<section id="icons" class="page-break">
+  <div class="section-title"><span class="num">15</span> 아이콘 (Feather Icons)</div>
+  <p class="section-desc">이모지 사용 금지. Feather Icons를 표준 아이콘으로 사용합니다.</p>
+
+  <h3>CDN 연동</h3>
+  <table>
+    <tr><th>방법</th><th>코드</th></tr>
+    <tr><td>Script</td><td><code>&lt;script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"&gt;&lt;/script&gt;</code></td></tr>
+    <tr><td>초기화</td><td><code>feather.replace()</code> &mdash; 페이지 로드 후 호출</td></tr>
+    <tr><td>사용법</td><td><code>&lt;i data-feather="icon-name"&gt;&lt;/i&gt;</code></td></tr>
+  </table>
+
+  <h3>주요 아이콘 (쇼핑몰 필수)</h3>
+  <div class="icon-grid">
+    <div class="icon-cell"><i data-feather="search"></i><div class="icon-name">search<br>검색</div></div>
+    <div class="icon-cell"><i data-feather="shopping-cart"></i><div class="icon-name">shopping-cart<br>장바구니</div></div>
+    <div class="icon-cell"><i data-feather="user"></i><div class="icon-name">user<br>마이페이지</div></div>
+    <div class="icon-cell"><i data-feather="heart"></i><div class="icon-name">heart<br>찜하기</div></div>
+    <div class="icon-cell"><i data-feather="package"></i><div class="icon-name">package<br>배송</div></div>
+    <div class="icon-cell"><i data-feather="truck"></i><div class="icon-name">truck<br>배송추적</div></div>
+    <div class="icon-cell"><i data-feather="refresh-cw"></i><div class="icon-name">refresh-cw<br>정기배송</div></div>
+    <div class="icon-cell"><i data-feather="star"></i><div class="icon-name">star<br>리뷰/별점</div></div>
+    <div class="icon-cell"><i data-feather="gift"></i><div class="icon-name">gift<br>혜택/쿠폰</div></div>
+    <div class="icon-cell"><i data-feather="tag"></i><div class="icon-name">tag<br>할인/태그</div></div>
+    <div class="icon-cell"><i data-feather="credit-card"></i><div class="icon-name">credit-card<br>결제</div></div>
+    <div class="icon-cell"><i data-feather="clipboard"></i><div class="icon-name">clipboard<br>주문내역</div></div>
+    <div class="icon-cell"><i data-feather="home"></i><div class="icon-name">home<br>홈</div></div>
+    <div class="icon-cell"><i data-feather="menu"></i><div class="icon-name">menu<br>햄버거메뉴</div></div>
+    <div class="icon-cell"><i data-feather="x"></i><div class="icon-name">x<br>닫기</div></div>
+    <div class="icon-cell"><i data-feather="chevron-down"></i><div class="icon-name">chevron-down<br>펼치기</div></div>
+    <div class="icon-cell"><i data-feather="chevron-right"></i><div class="icon-name">chevron-right<br>이동</div></div>
+    <div class="icon-cell"><i data-feather="arrow-left"></i><div class="icon-name">arrow-left<br>뒤로가기</div></div>
+    <div class="icon-cell"><i data-feather="plus"></i><div class="icon-name">plus<br>추가/수량+</div></div>
+    <div class="icon-cell"><i data-feather="minus"></i><div class="icon-name">minus<br>수량-</div></div>
+    <div class="icon-cell"><i data-feather="check"></i><div class="icon-name">check<br>완료/체크</div></div>
+    <div class="icon-cell"><i data-feather="check-circle"></i><div class="icon-name">check-circle<br>성공</div></div>
+    <div class="icon-cell"><i data-feather="alert-circle"></i><div class="icon-name">alert-circle<br>경고</div></div>
+    <div class="icon-cell"><i data-feather="info"></i><div class="icon-name">info<br>안내</div></div>
+    <div class="icon-cell"><i data-feather="help-circle"></i><div class="icon-name">help-circle<br>도움말</div></div>
+    <div class="icon-cell"><i data-feather="phone"></i><div class="icon-name">phone<br>전화</div></div>
+    <div class="icon-cell"><i data-feather="mail"></i><div class="icon-name">mail<br>이메일</div></div>
+    <div class="icon-cell"><i data-feather="message-circle"></i><div class="icon-name">message-circle<br>채팅상담</div></div>
+    <div class="icon-cell"><i data-feather="share-2"></i><div class="icon-name">share-2<br>공유</div></div>
+    <div class="icon-cell"><i data-feather="copy"></i><div class="icon-name">copy<br>복사</div></div>
+    <div class="icon-cell"><i data-feather="trash-2"></i><div class="icon-name">trash-2<br>삭제</div></div>
+    <div class="icon-cell"><i data-feather="edit-2"></i><div class="icon-name">edit-2<br>수정</div></div>
+    <div class="icon-cell"><i data-feather="filter"></i><div class="icon-name">filter<br>필터</div></div>
+    <div class="icon-cell"><i data-feather="sliders"></i><div class="icon-name">sliders<br>정렬/설정</div></div>
+    <div class="icon-cell"><i data-feather="calendar"></i><div class="icon-name">calendar<br>날짜선택</div></div>
+    <div class="icon-cell"><i data-feather="clock"></i><div class="icon-name">clock<br>시간/최근</div></div>
+    <div class="icon-cell"><i data-feather="image"></i><div class="icon-name">image<br>이미지</div></div>
+    <div class="icon-cell"><i data-feather="camera"></i><div class="icon-name">camera<br>사진촬영</div></div>
+    <div class="icon-cell"><i data-feather="download"></i><div class="icon-name">download<br>다운로드</div></div>
+    <div class="icon-cell"><i data-feather="external-link"></i><div class="icon-name">external-link<br>외부링크</div></div>
+  </div>
+
+  <h3>아이콘 크기</h3>
+  <div class="preview-box">
+    <div class="icon-size-demo">
+      <div class="icon-size-item"><i data-feather="shopping-cart" width="16" height="16"></i><div class="icon-size-label">16px<br>인라인</div></div>
+      <div class="icon-size-item"><i data-feather="shopping-cart" width="20" height="20"></i><div class="icon-size-label">20px<br>기본</div></div>
+      <div class="icon-size-item"><i data-feather="shopping-cart" width="24" height="24"></i><div class="icon-size-label">24px<br>헤더</div></div>
+      <div class="icon-size-item"><i data-feather="shopping-cart" width="32" height="32"></i><div class="icon-size-label">32px<br>강조</div></div>
+      <div class="icon-size-item"><i data-feather="shopping-cart" width="48" height="48"></i><div class="icon-size-label">48px<br>빈 상태</div></div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>크기</th><th>용도</th><th>코드</th></tr>
+    <tr><td><code>16px</code></td><td>인라인 텍스트 옆, 뱃지</td><td><code>&lt;i data-feather="..." width="16" height="16"&gt;</code></td></tr>
+    <tr><td><code>20px</code></td><td>버튼 내부, 리스트 아이템</td><td><code>&lt;i data-feather="..." width="20" height="20"&gt;</code></td></tr>
+    <tr><td><code>24px</code></td><td>헤더 아이콘, 네비게이션 (기본값)</td><td><code>&lt;i data-feather="..."&gt;</code></td></tr>
+    <tr><td><code>32px</code></td><td>강조 아이콘, 카드 헤더</td><td><code>&lt;i data-feather="..." width="32" height="32"&gt;</code></td></tr>
+    <tr><td><code>48px</code></td><td>빈 상태 일러스트, 대형 CTA</td><td><code>&lt;i data-feather="..." width="48" height="48"&gt;</code></td></tr>
+  </table>
+
+  <h3>아이콘 스타일 규칙</h3>
+  <table>
+    <tr><th>속성</th><th>값</th><th>비고</th></tr>
+    <tr><td>기본 색상</td><td><code>var(--sm-black)</code> = #1A1A1A</td><td>본문 텍스트와 동일</td></tr>
+    <tr><td>보조 색상</td><td><code>var(--sm-text-light)</code> = #999</td><td>비활성, 보조 정보</td></tr>
+    <tr><td>강조 색상</td><td><code>var(--sm-orange)</code> = #F15A30</td><td>활성 상태, CTA 내부</td></tr>
+    <tr><td>흰색</td><td><code>#FFFFFF</code></td><td>오렌지 배경 위 아이콘</td></tr>
+    <tr><td>stroke-width</td><td><code>2</code> (기본값)</td><td>변경하지 않을 것</td></tr>
+    <tr><td>수직 정렬</td><td><code>vertical-align: middle</code></td><td>텍스트 옆 배치 시</td></tr>
+  </table>
+
+  <h3>사용 금지 사항</h3>
+  <table>
+    <tr><th style="color:#D94E26;">금지</th><th style="color:#1EC800;">대체</th></tr>
+    <tr><td>이모지 사용 (&#x1f6d2; &#x1f50d; &#x2b50; 등)</td><td>Feather Icon 사용</td></tr>
+    <tr><td>Font Awesome, Material Icons 등 타 아이콘 라이브러리</td><td>Feather Icons로 통일</td></tr>
+    <tr><td>커스텀 SVG 아이콘 (Feather에 있는 경우)</td><td>Feather 아이콘 우선 사용</td></tr>
+    <tr><td>아이콘 stroke-width 변경</td><td>기본값 2 유지</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 16. FAQ ═══════ -->
+<section id="faq" class="page-break">
+  <div class="section-title"><span class="num">16</span> FAQ 아코디언</div>
+  <p class="section-desc">native &lt;details&gt; 요소 기반. 두 가지 스타일 제공.</p>
+
+  <h3>스타일 A: 카드형 (+ 아이콘)</h3>
+  <div class="preview-box" style="flex-direction:column;align-items:stretch;">
+    <div class="faq-demo" style="margin:0 auto;">
+      <details class="faq-item">
+        <summary>정기배송은 어떻게 신청하나요?</summary>
+        <div class="faq-ans">마이페이지 > 정기배송 관리에서 원하시는 상품과 배송 주기를 선택하시면 됩니다. 최소 2주부터 최대 8주까지 설정 가능합니다.</div>
+      </details>
+      <details class="faq-item" open>
+        <summary>배송비는 얼마인가요?</summary>
+        <div class="faq-ans">3만원 이상 구매 시 무료배송입니다. 3만원 미만 주문 시 배송비 3,000원이 부과됩니다.</div>
+      </details>
+      <details class="faq-item">
+        <summary>교환/환불 절차가 궁금합니다</summary>
+        <div class="faq-ans">상품 수령 후 7일 이내 고객센터(1588-0000)로 연락해주시면 교환/환불 처리가 가능합니다.</div>
+      </details>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>속성</th><th>기본 (닫힘)</th><th>열림 (open)</th></tr>
+    <tr><td>테두리</td><td><code>1px solid #EEEEEE</code></td><td><code>1px solid var(--sm-orange)</code></td></tr>
+    <tr><td>라운딩</td><td colspan="2"><code>12px</code></td></tr>
+    <tr><td>그림자</td><td>없음</td><td><code>0 4px 12px rgba(241,90,48,0.06)</code></td></tr>
+    <tr><td>질문 패딩</td><td colspan="2"><code>16px 20px</code></td></tr>
+    <tr><td>질문 폰트</td><td><code>15px, 600, #1A1A1A</code></td><td><code>15px, 600, var(--sm-orange)</code></td></tr>
+    <tr><td>아이콘</td><td><code>+</code> 기호, 20px, #999</td><td><code>rotate(45deg)</code>, var(--sm-orange)</td></tr>
+    <tr><td>답변 패딩</td><td colspan="2"><code>0 20px 16px</code></td></tr>
+    <tr><td>답변 폰트</td><td colspan="2"><code>14px, 400, #666, line-height 1.7</code></td></tr>
+    <tr><td>Summary hover</td><td colspan="2">bg <code>#FAFAFA</code></td></tr>
+    <tr><td>트랜지션</td><td colspan="2"><code>all 0.3s ease</code></td></tr>
+  </table>
+
+  <h3>스타일 B: 라인형 (chevron 아이콘)</h3>
+  <div class="preview-box" style="flex-direction:column;align-items:stretch;">
+    <div class="faq-demo" style="margin:0 auto;">
+      <details class="faq-item-v2">
+        <summary>사료 급여량은 어떻게 되나요? <span class="faq-icon"></span></summary>
+        <div class="faq-ans-v2">반려동물의 체중과 활동량에 따라 다릅니다. 상품 상세페이지의 급여량 표를 참고해주세요.</div>
+      </details>
+      <details class="faq-item-v2" open>
+        <summary>알레르기가 있는 아이도 먹을 수 있나요? <span class="faq-icon"></span></summary>
+        <div class="faq-ans-v2">각 상품 상세페이지에서 원재료 목록을 확인하실 수 있습니다. 특정 알레르기가 있는 경우 수의사와 상담 후 급여를 권장합니다.</div>
+      </details>
+      <details class="faq-item-v2">
+        <summary>유통기한은 얼마나 되나요? <span class="faq-icon"></span></summary>
+        <div class="faq-ans-v2">개봉 전 상온 보관 시 제조일로부터 18개월입니다. 개봉 후에는 밀봉하여 서늘한 곳에 보관하시고, 1개월 이내 급여를 권장합니다.</div>
+      </details>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>속성</th><th>기본 (닫힘)</th><th>열림 (open)</th></tr>
+    <tr><td>구분선</td><td colspan="2"><code>border-bottom: 1px solid #EEEEEE</code></td></tr>
+    <tr><td>질문 패딩</td><td colspan="2"><code>18px 0</code></td></tr>
+    <tr><td>질문 색상</td><td><code>#1A1A1A</code></td><td><code>var(--sm-orange)</code></td></tr>
+    <tr><td>아이콘</td><td>chevron (V), border 기반, #999</td><td><code>rotate(-135deg)</code>, var(--sm-orange)</td></tr>
+    <tr><td>아이콘 크기</td><td colspan="2"><code>24px &times; 24px</code> 영역, <code>8px</code> chevron</td></tr>
+    <tr><td>답변 패딩</td><td colspan="2"><code>0 0 18px</code></td></tr>
+    <tr><td>답변 폰트</td><td colspan="2"><code>14px, 400, #666, line-height 1.7</code></td></tr>
+  </table>
+
+  <h3>HTML 구조</h3>
+  <table>
+    <tr><th>요소</th><th>클래스</th><th>설명</th></tr>
+    <tr><td><code>&lt;details&gt;</code></td><td><code>.faq-item</code> / <code>.sm-faq__item</code></td><td>아코디언 컨테이너 (open 속성으로 상태 관리)</td></tr>
+    <tr><td><code>&lt;summary&gt;</code></td><td>-</td><td>질문 (클릭 영역). marker 제거 필수</td></tr>
+    <tr><td><code>&lt;div&gt;</code></td><td><code>.faq-ans</code> / <code>.sm-faq__answer</code></td><td>답변 내용</td></tr>
+  </table>
+
+  <h3>필수 CSS 초기화</h3>
+  <table>
+    <tr><th>선택자</th><th>속성</th><th>이유</th></tr>
+    <tr><td><code>summary::-webkit-details-marker</code></td><td><code>display: none</code></td><td>기본 삼각형 마커 제거</td></tr>
+    <tr><td><code>summary</code></td><td><code>list-style: none</code></td><td>Firefox 마커 제거</td></tr>
+    <tr><td><code>summary</code></td><td><code>cursor: pointer</code></td><td>클릭 가능 표시</td></tr>
+  </table>
+</section>
+
+<!-- ═══════ 17. MODALS & DRAWER ═══════ -->
+<section id="modals">
+  <div class="section-title"><span class="num">17</span> 모달 & 드로어</div>
+  <p class="section-desc">3가지 오버레이 패턴: 센터 모달, 퀴즈 모달, 모바일 드로어.</p>
+
+  <div class="modal-type-grid" style="margin-bottom:24px;">
+
+    <!-- Center Modal -->
+    <div class="modal-type-card">
+      <div class="modal-type-label">A. 상품 정보 모달 (pm-overlay)</div>
+      <div class="modal-type-body">
+        <div class="modal-preview" style="padding:24px;border-radius:0;">
+          <div class="modal-box" style="max-width:260px;padding:20px;">
+            <button class="modal-close">&times;</button>
+            <div style="aspect-ratio:16/9;background:linear-gradient(135deg,#FFE8D6,#FFD4B8);border-radius:8px;margin-bottom:12px;display:flex;align-items:center;justify-content:center;"><i data-feather="package" width="32" height="32" color="#F15A30"></i></div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:4px;">뉴질랜드 청정 연어</div>
+            <div style="font-size:13px;color:#666;margin-bottom:12px;">단백질 32% | 지방 15%</div>
+            <button class="btn-primary" style="width:100%;padding:10px;font-size:13px;">담기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div class="modal-type-card">
+      <div class="modal-type-label">B. 퀴즈 모달 (quiz-overlay)</div>
+      <div class="modal-type-body">
+        <div class="modal-preview" style="padding:24px;border-radius:0;">
+          <div class="modal-box" style="max-width:260px;padding:20px;text-align:left;">
+            <button class="modal-close">&times;</button>
+            <div style="font-size:15px;font-weight:700;margin-bottom:4px;">우리 아이 맞춤 사료 찾기</div>
+            <div style="border-bottom:1px solid #EEE;margin:8px 0 12px;"></div>
+            <div style="font-size:13px;color:#666;margin-bottom:8px;">Q. 반려동물 종류는?</div>
+            <div style="display:flex;gap:8px;margin-bottom:12px;">
+              <div style="flex:1;padding:10px;border:1px solid #F15A30;border-radius:8px;text-align:center;font-size:12px;font-weight:600;color:#F15A30;background:rgba(241,90,48,0.06);">강아지</div>
+              <div style="flex:1;padding:10px;border:1px solid #EEE;border-radius:8px;text-align:center;font-size:12px;color:#666;">고양이</div>
+            </div>
+            <button class="btn-primary" style="width:100%;padding:10px;font-size:13px;">다음</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer -->
+    <div class="modal-type-card">
+      <div class="modal-type-label">C. 모바일 드로어 (Bottom Sheet)</div>
+      <div class="modal-type-body" style="display:flex;justify-content:center;">
+        <div class="drawer-demo">
+          <div class="drawer-overlay"></div>
+          <div class="drawer-content">
+            <div class="drawer-handle"></div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:12px;">배송 옵션 선택</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="padding:12px;border:1px solid #F15A30;border-radius:8px;font-size:13px;font-weight:600;color:#F15A30;background:rgba(241,90,48,0.06);">일반배송 (2-3일)</div>
+              <div style="padding:12px;border:1px solid #EEE;border-radius:8px;font-size:13px;color:#666;">새벽배송 (+3,000원)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>A. 상품 정보 모달 (Center Modal)</h3>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>오버레이</td><td><code>rgba(0,0,0,0.6)</code> + <code>backdrop-filter: blur(4px)</code></td></tr>
+    <tr><td>모달 배경</td><td><code>#FFFFFF</code></td></tr>
+    <tr><td>라운딩</td><td><code>16px</code></td></tr>
+    <tr><td>최대 너비</td><td><code>440px</code></td></tr>
+    <tr><td>그림자</td><td><code>var(--sm-shadow-float)</code></td></tr>
+    <tr><td>닫기 버튼</td><td><code>32px</code> 원형, bg white, 우상단 절대 위치</td></tr>
+    <tr><td>이미지</td><td><code>aspect-ratio: 16/9</code>, border-radius 8px</td></tr>
+    <tr><td>Z-Index</td><td><code>var(--sm-z-modal)</code> = 1000000001</td></tr>
+    <tr><td>상태 토글</td><td><code>.pm-overlay.show { display: flex }</code></td></tr>
+  </table>
+
+  <h3>B. 퀴즈 모달</h3>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>오버레이</td><td>상품 모달과 동일</td></tr>
+    <tr><td>최대 너비</td><td><code>520px</code> (더 넓음)</td></tr>
+    <tr><td>헤더 구분선</td><td><code>border-bottom: 1px solid #EEEEEE</code></td></tr>
+    <tr><td>선택 옵션 (기본)</td><td>border <code>1px solid #EEE</code>, radius <code>8px</code></td></tr>
+    <tr><td>선택 옵션 (활성)</td><td>border <code>var(--sm-orange)</code>, bg <code>var(--sm-orange-light)</code>, color orange</td></tr>
+    <tr><td>상태 토글</td><td><code>.quiz-overlay.show { display: flex }</code></td></tr>
+  </table>
+
+  <h3>C. 모바일 드로어 (Bottom Sheet)</h3>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>위치</td><td><code>position: fixed; bottom: 0; left: 0; right: 0</code></td></tr>
+    <tr><td>라운딩</td><td><code>16px 16px 0 0</code> (상단만)</td></tr>
+    <tr><td>그림자</td><td><code>0 -4px 20px rgba(0,0,0,0.08)</code></td></tr>
+    <tr><td>닫힘 높이</td><td><code>max-height: 0</code></td></tr>
+    <tr><td>열림 높이</td><td><code>max-height: 50vh</code></td></tr>
+    <tr><td>트랜지션</td><td><code>max-height 0.35s cubic-bezier(.32,.72,0,1)</code></td></tr>
+    <tr><td>핸들 바</td><td>40px &times; 4px, bg <code>#D9D9D9</code>, radius 2px, 중앙</td></tr>
+    <tr><td>오버레이</td><td><code>rgba(0,0,0,0.3)</code>, opacity 애니메이션</td></tr>
+    <tr><td>Body 스크롤</td><td>열릴 때 <code>document.body.style.overflow = 'hidden'</code></td></tr>
+    <tr><td>상태 토글</td><td><code>.mbf-drawer.open</code> + <code>.mob-overlay.show</code></td></tr>
+  </table>
+
+  <h3>모달 공통 JavaScript 패턴</h3>
+  <table>
+    <tr><th>패턴</th><th>설명</th></tr>
+    <tr><td>상태 관리</td><td>CSS class 기반 (<code>.show</code>, <code>.open</code>)</td></tr>
+    <tr><td>열기/닫기</td><td><code>classList.add('show')</code> / <code>classList.remove('show')</code></td></tr>
+    <tr><td>다중 요소 동기화</td><td>모달 + 오버레이 + body overflow 동시 토글</td></tr>
+    <tr><td>스크롤 방지</td><td><code>body.style.overflow = 'hidden'</code> (열릴 때)</td></tr>
+    <tr><td>외부 라이브러리</td><td>없음 (Vanilla JS)</td></tr>
+  </table>
+
+  <h3>토스트 알림 (Cart Toast)</h3>
+  <table>
+    <tr><th>속성</th><th>값</th></tr>
+    <tr><td>위치</td><td><code>position: fixed; bottom</code></td></tr>
+    <tr><td>배경</td><td>반투명 다크 오버레이</td></tr>
+    <tr><td>Z-Index</td><td><code>var(--sm-z-toast)</code> = 10001</td></tr>
+    <tr><td>트리거</td><td><code>EC_PRODUCT_ACTION_BASKET</code> 이벤트 감지</td></tr>
+    <tr><td>버튼</td><td>아웃라인(장바구니 보기) + 채움(계속 쇼핑) 조합</td></tr>
+  </table>
+</section>
+
+</div><!-- /container -->
+
+<!-- ═══════ FOOTER ═══════ -->
+<div style="background:#FAFAFA;padding:32px 0;margin-top:48px;text-align:center;font-size:13px;color:#999;">
+  Seamonster Design System v1.0 &middot; 2026.04 &middot; github.com/Youn-hub-SM/seamonster-manual
+</div>
+
+<script>feather.replace();</script>
+</body>
+</html>

@@ -112,6 +112,31 @@
 - 헤더: all 0.4s ease-in-out
 - 진행률: width 0.6s cubic-bezier(.25,.46,.45,.94)
 
+## 아이콘 (Feather Icons)
+- 이모지 사용 금지. 반드시 Feather Icons 사용
+- CDN: `<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>`
+- 사용법: `<i data-feather="icon-name"></i>` + 페이지 로드 후 `feather.replace()`
+- 크기: 16px(인라인), 20px(버튼), 24px(헤더, 기본), 32px(강조), 48px(빈 상태)
+- 색상: 기본 var(--sm-black), 보조 var(--sm-text-light), 강조 var(--sm-orange)
+- stroke-width 기본값 2 유지, 변경 금지
+- Font Awesome, Material Icons 등 타 라이브러리 사용 금지
+
+## FAQ 아코디언
+- native `<details>` + `<summary>` 사용
+- summary::-webkit-details-marker { display: none } 필수
+- 스타일 A (카드형): border 1px solid #EEE, radius 12px, open 시 border orange + shadow
+- 스타일 B (라인형): border-bottom 구분선, chevron 아이콘
+- 질문: 15px, 600, open 시 color orange
+- 답변: 14px, 400, #666, line-height 1.7
+
+## 모달 & 드로어
+- 센터 모달: overlay rgba(0,0,0,0.6) + blur(4px), box radius 16px, max-width 440px
+- 퀴즈 모달: max-width 520px, 헤더 구분선, 선택옵션 카드형
+- 모바일 드로어: bottom sheet, radius 16px 16px 0 0, max-height 0→50vh 토글
+- 트랜지션: 드로어 0.35s cubic-bezier(.32,.72,0,1)
+- 상태: class 기반 (.show, .open), body overflow hidden 동기화
+- 토스트: position fixed bottom, z-index 10001
+
 ## 클래스 네이밍
 - sm- (씨몬스터 커스텀), pg- (상품 그리드), xans- (Cafe24 기본)
 
@@ -126,7 +151,10 @@
 8. 최소 폰트 13px, Pretendard Variable
 9. 모바일 우선, clamp() 활용
 10. 새 컴포넌트 만들기 전 기존 코드 먼저 참조
+11. 이모지 금지, Feather Icons만 사용
+12. FAQ는 native details/summary 사용
 
 ## 상세 문서
 - 전체 매뉴얼: docs/design-system.md
+- 시각화 가이드: docs/design-system-visual.html
 - Claude 프롬프트: docs/claude-prompt.md
